@@ -49,6 +49,7 @@ ChatBot::~ChatBot()
 
 // copy constructor (copy data into this)
 ChatBot::ChatBot(const ChatBot &source){
+    std::cout << "ChatBot Copy Constructor" << std::endl;
     _image = new wxBitmap(*(source._image)); // make a deep copy of source's img pointer
     // the rest are not owned by the chatbot, so just a simple assignemnt is needed
     _currentNode = source._currentNode; 
@@ -58,6 +59,7 @@ ChatBot::ChatBot(const ChatBot &source){
 
 // copy operator (smae thing but operator)
 ChatBot& ChatBot::operator=(const ChatBot &source){
+    std::cout << "ChatBot Copy Operator" << std::endl;
     if(this == &source){
         return *this; // no need to copy anything if source is the same instance
     }
@@ -74,6 +76,8 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
 
 // move cosntructor (give data from source -> target. leaving a blank shell for source)
 ChatBot::ChatBot(ChatBot &&source){
+
+    std::cout << "ChatBot Move Constructor" << std::endl;
     // use std::move
     _image = std::move(source._image);
     _currentNode = std::move(source._currentNode);
@@ -83,6 +87,7 @@ ChatBot::ChatBot(ChatBot &&source){
 
 // move op (same but operator)
 ChatBot& ChatBot::operator=(ChatBot &&source){
+    std::cout << "ChatBot Move Operator" << std::endl;
     if(this == &source){
         return *this; // no need to move anything if source is the same instance
     }
