@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <algorithm>
+#include <utility> // for std::move()
 #include <ctime>
 
 #include "chatlogic.h"
@@ -10,7 +11,7 @@
 
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
-{
+{  
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
@@ -32,21 +33,68 @@ ChatBot::ChatBot(std::string filename)
 
 ChatBot::~ChatBot()
 {
-    std::cout << "ChatBot Destructor" << std::endl;
-
+    std::cout << "ChatBot Destructor Started" << std::endl;
     // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if(_image != NULL && _image != nullptr && _image) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
-        _image = NULL;
+        
+        std::cout << "ChatBot Destructor Cleared Image" << std::endl;
     }
+    std::cout << "ChatBot Destructor Finished" << std::endl;
 }
 
-//// STUDENT CODE
+//// STUDENT CODE T2 DONE
 ////
 
+// copy constructor (copy data into this)
+ChatBot::ChatBot(const ChatBot &source){
+    _image = new wxBitmap(*(source._image)); // make a deep copy of source's img pointer
+    // the rest are not owned by the chatbot, so just a simple assignemnt is needed
+    _currentNode = source._currentNode; 
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+}
+
+// copy operator (smae thing but operator)
+ChatBot& ChatBot::operator=(const ChatBot &source){
+    if(this == &source){
+        return *this; // no need to copy anything if source is the same instance
+    }
+    delete _image; // delete existing image before copying
+    _image = new wxBitmap(*(source._image)); // make a deep copy of source's img pointer
+    // the rest are not owned by the chatbot, so just a simple assignemnt is needed
+    _currentNode = source._currentNode; 
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+
+    return *this;
+}
+
+
+// move cosntructor (give data from source -> target. leaving a blank shell for source)
+ChatBot::ChatBot(ChatBot &&source){
+    // use std::move
+    _image = std::move(source._image);
+    _currentNode = std::move(source._currentNode);
+    _rootNode = std::move(source._rootNode);
+    _chatLogic = std::move(source._chatLogic);
+}
+
+// move op (same but operator)
+ChatBot& ChatBot::operator=(ChatBot &&source){
+    if(this == &source){
+        return *this; // no need to move anything if source is the same instance
+    }
+    delete _image;
+    _image = std::move(source._image);
+    _currentNode = std::move(source._currentNode);
+    _rootNode = std::move(source._rootNode);
+    _chatLogic = std::move(source._chatLogic);
+    return *this;
+}
 ////
-//// EOF STUDENT CODE
+//// EOF STUDENT CODE T2 DONE
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {

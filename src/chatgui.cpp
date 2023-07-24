@@ -2,6 +2,7 @@
 #include <wx/colour.h>
 #include <wx/image.h>
 #include <string>
+#include <memory>
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
@@ -114,11 +115,12 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     // allow for PNG images to be handled
     wxInitAllImageHandlers();
 
-    //// STUDENT CODE
+    //// STUDENT CODE T1 DONE
     ////
 
     // create chat logic instance
-    _chatLogic = new ChatLogic(); 
+    _chatLogic = std::make_unique<ChatLogic>(); 
+    //_chatLogic = new ChatLogic();
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
     _chatLogic->SetPanelDialogHandle(this);
@@ -127,18 +129,19 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
 
     ////
-    //// EOF STUDENT CODE
+    //// EOF STUDENT CODE T1 DONE
 }
 
 ChatBotPanelDialog::~ChatBotPanelDialog()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE T1 DONE
     ////
 
-    delete _chatLogic;
+    // not needed since unique ptr auot-deallocates
+    //delete _chatLogic;
 
     ////
-    //// EOF STUDENT CODE
+    //// EOF STUDENT CODE T1 DONE
 }
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
