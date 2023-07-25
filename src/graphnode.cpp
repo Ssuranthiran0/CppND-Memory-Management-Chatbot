@@ -1,3 +1,4 @@
+#include <iostream>
 #include "graphedge.h"
 #include "graphnode.h"
 
@@ -8,13 +9,13 @@ GraphNode::GraphNode(int id)
 
 GraphNode::~GraphNode()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE T5
     ////
 
     delete _chatBot; 
 
     ////
-    //// EOF STUDENT CODE
+    //// EOF STUDENT CODE T5
 }
 
 void GraphNode::AddToken(std::string token)
@@ -29,10 +30,11 @@ void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
 
 void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
 {
-    _childEdges.push_back(edge);
+    std::shared_ptr<GraphEdge> nextEdge(edge);
+    _childEdges.push_back(nextEdge);
 }
 
-//// STUDENT CODE
+//// STUDENT CODE T5
 ////
 void GraphNode::MoveChatbotHere(ChatBot *chatbot)
 {
@@ -46,15 +48,15 @@ void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
     _chatBot = nullptr; // invalidate pointer at source
 }
 ////
-//// EOF STUDENT CODE
+//// EOF STUDENT CODE T5
 
 GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
-    //// STUDENT CODE
+    //// STUDENT CODE T4 DONE
     ////
 
-    return _childEdges[index];
+    return _childEdges[index].get();
 
     ////
-    //// EOF STUDENT CODE
+    //// EOF STUDENT CODE T4 DONE
 }

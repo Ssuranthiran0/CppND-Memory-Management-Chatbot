@@ -14,7 +14,7 @@
 
 ChatLogic::ChatLogic()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE T5
     ////
 
     // create instance of chatbot
@@ -24,12 +24,12 @@ ChatLogic::ChatLogic()
     _chatBot->SetChatLogicHandle(this);
 
     ////
-    //// EOF STUDENT CODE
+    //// EOF STUDENT CODE T5
 }
 
 ChatLogic::~ChatLogic()
 {
-    //// STUDENT CODE T3 DONE
+    //// STUDENT CODE T3 + T4 + T5 DONE
     ////
 
     // delete chatbot instance
@@ -43,14 +43,19 @@ ChatLogic::~ChatLogic()
         delete *it;
     }*/
 
-    // delete all edges
-    for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
+    // delete all edges not needed because all edges that are owned by each node are smart ptr
+    /*
+    for(auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
     {
-        delete *it;
+        for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
+        {
+            delete *it;
+        }
     }
+    */
 
     ////
-    //// EOF STUDENT CODE T3 DONE
+    //// EOF STUDENT CODE T3 + T4 + T5 DONE
 }
 
 template <typename T>
@@ -149,7 +154,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     // edge-based processing
                     if (type->second == "EDGE")
                     {
-                        //// STUDENT CODE T3 DONE
+                        //// STUDENT CODE T3 + T4 DONE
                         ////
 
                         // find tokens for incoming (parent) and outgoing (child) node
@@ -158,16 +163,29 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
                         if (parentToken != tokens.end() && childToken != tokens.end())
                         {
-                            // get iterator on incoming and outgoing node via ID search
+                            // get iterator on incoming and outgoing node via ID search || change GraphNode* to std::shared ptr (_nodes = vector<shared_ptr<GraphNode>)
                             auto parentNode = std::find_if(_nodes.begin(), _nodes.end(), [&parentToken](std::shared_ptr<GraphNode> node) { return node->GetID() == std::stoi(parentToken->second); });
                             auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](std::shared_ptr<GraphNode> node) { return node->GetID() == std::stoi(childToken->second); });
                             
                             // create new edge
                             GraphEdge *edge = new GraphEdge(id);
                             edge->SetChildNode((*childNode).get());
-                            std::cout << "child is good/n";
                             edge->SetParentNode((*parentNode).get());
-                            _edges.push_back(edge);
+                            ////
+                            /*
+
+                            just a quick comment for the reviewer: i might be missing something, but i dont believe the _edges vector is ever used at all
+                            except for when it was being deallocated and when it was being added to
+                            whenever edges were actually needed, the edge ptrs from each graphnode/graphedge(idk which one) were called instead of the _edges
+                            vector.
+                            then again, i might be a bit confused
+                            then again, wouldnt this be marginally more mem efficient compared to having a vector of edges and moving them into child
+                            it seems better to just make it and put it in
+                            went on a huge tangent and i think i might be missing something
+
+                            */
+                            ////
+                            //_edges.push_back(edge);
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
@@ -178,7 +196,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         }
 
                         ////
-                        //// EOF STUDENT CODE T3 DONE
+                        //// EOF STUDENT CODE T3 + T4 DONE
                     }
                 }
                 else

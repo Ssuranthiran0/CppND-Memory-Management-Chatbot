@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 class GraphNode; // forward declaration
 
@@ -10,8 +11,8 @@ class GraphEdge
 {
 private:
     // data handles (not owned)
-    GraphNode *_childNode;
-    GraphNode *_parentNode;
+    GraphNode* _childNode;
+    GraphNode* _parentNode;
 
     // proprietary members
     int _id;

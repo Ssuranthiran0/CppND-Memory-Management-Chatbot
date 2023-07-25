@@ -14,15 +14,15 @@ class GraphNode;
 class ChatLogic
 {
 private:
-    //// STUDENT CODE T3 DONE
+    //// STUDENT CODE T3+T4 DONE
     ////
 
     // data handles (owned)
-    std::vector<std::shared_ptr<GraphNode>> _nodes;
-    std::vector<GraphEdge *> _edges;
-
+    std::vector<std::shared_ptr<GraphNode>> _nodes; // used shared ptr to allow copy semantics
+    //std::vector<GraphEdge *> _edges;
+    // these will be owned by each elemnt in _nodes
     ////
-    //// EOF STUDENT CODE T3 DONE
+    //// EOF STUDENT CODE T3+T4 DONE
 
     // data handles (not owned)
     GraphNode *_currentNode;
