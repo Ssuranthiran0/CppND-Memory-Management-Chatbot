@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <iterator>
+#include <utility> // mainly std::move
 #include <tuple>
 #include <algorithm>
 
@@ -14,8 +15,10 @@
 
 ChatLogic::ChatLogic()
 {
-    //// STUDENT CODE T5
+    //// STUDENT CODE T5 UNNECESSARY
     ////
+    // from task 5 in the readme: 
+    // Note that the member `_chatBot` of `ChatLogic` remains so it can be used as a communication handle between GUI and `ChatBot` instance.
 
     // create instance of chatbot
     _chatBot = new ChatBot("../images/chatbot.png");
@@ -24,7 +27,7 @@ ChatLogic::ChatLogic()
     _chatBot->SetChatLogicHandle(this);
 
     ////
-    //// EOF STUDENT CODE T5
+    //// EOF STUDENT CODE T5 UNNECESSARY
 }
 
 ChatLogic::~ChatLogic()
@@ -33,7 +36,7 @@ ChatLogic::~ChatLogic()
     ////
 
     // delete chatbot instance
-    delete _chatBot;
+    //delete _chatBot; // again, this is the gui chatbot so it doesnt matter???
 
     // delete all nodes
     // vector<uniqueptr> smart ptr
@@ -215,7 +218,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         return;
     }
 
-    //// STUDENT CODE T3 DONE
+    //// STUDENT CODE T3 + T5 DONE
     ////
 
     // identify root node
@@ -239,10 +242,17 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
     // add chatbot to graph root node
     _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+
+    std::unique_ptr<ChatBot> chatBot(_chatBot); // create chatbot
+    _chatBot = chatBot.get(); // kinda weird implementation (copying then copying again) but idk
+
+
+    //rootNode->MoveChatbotHere(_chatBot);
+    rootNode->MoveChatbotHere(std::move(chatBot.get())); // move the new chatbot instead
+
     
     ////
-    //// EOF STUDENT CODE T3 DONE
+    //// EOF STUDENT CODE T3 + T5 DONE
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
