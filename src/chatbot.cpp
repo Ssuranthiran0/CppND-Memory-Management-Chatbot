@@ -13,7 +13,7 @@
 ChatBot::ChatBot()
 {  
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -31,17 +31,15 @@ ChatBot::ChatBot(std::string filename)
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
-ChatBot::~ChatBot()
+ChatBot::~ChatBot() // i get a segmentation fault whenever deleting a ChatBot
 {
-    std::cout << "ChatBot Destructor Started" << std::endl;
+    std::cout << "ChatBot Destructor" << std::endl;
     // deallocate heap memory
     if(_image != NULL && _image != nullptr && _image) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
-        
-        std::cout << "ChatBot Destructor Cleared Image" << std::endl;
+        _image = NULL;
     }
-    std::cout << "ChatBot Destructor Finished" << std::endl;
 }
 
 //// STUDENT CODE T2 DONE
@@ -63,7 +61,6 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
     if(this == &source){
         return *this; // no need to copy anything if source is the same instance
     }
-    delete _image; // delete existing image before copying
     _image = new wxBitmap(*(source._image)); // make a deep copy of source's img pointer
     // the rest are not owned by the chatbot, so just a simple assignemnt is needed
     _currentNode = source._currentNode; 
@@ -83,6 +80,7 @@ ChatBot::ChatBot(ChatBot &&source){
     _currentNode = std::move(source._currentNode);
     _rootNode = std::move(source._rootNode);
     _chatLogic = std::move(source._chatLogic);
+    
 }
 
 // move op (same but operator)
@@ -91,7 +89,6 @@ ChatBot& ChatBot::operator=(ChatBot &&source){
     if(this == &source){
         return *this; // no need to move anything if source is the same instance
     }
-    delete _image;
     _image = std::move(source._image);
     _currentNode = std::move(source._currentNode);
     _rootNode = std::move(source._rootNode);

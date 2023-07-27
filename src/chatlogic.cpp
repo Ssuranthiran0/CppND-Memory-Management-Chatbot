@@ -17,14 +17,13 @@ ChatLogic::ChatLogic()
 {
     //// STUDENT CODE T5 UNNECESSARY
     ////
-    // from task 5 in the readme: 
-    // Note that the member `_chatBot` of `ChatLogic` remains so it can be used as a communication handle between GUI and `ChatBot` instance.
+    // moving all of this to the bottom of loadanswergraphfromfile
 
     // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
+    //_chatBot = new ChatBot("../images/chatbot.png");
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
+    //_chatBot->SetChatLogicHandle(this);
 
     ////
     //// EOF STUDENT CODE T5 UNNECESSARY
@@ -36,7 +35,7 @@ ChatLogic::~ChatLogic()
     ////
 
     // delete chatbot instance
-    //delete _chatBot; // again, this is the gui chatbot so it doesnt matter???
+    delete _chatBot; 
 
     // delete all nodes
     // vector<uniqueptr> smart ptr
@@ -241,16 +240,24 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
 
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-
-    std::unique_ptr<ChatBot> chatBot(_chatBot); // create chatbot
-    _chatBot = chatBot.get(); // kinda weird implementation (copying then copying again) but idk
-
-
-    //rootNode->MoveChatbotHere(_chatBot);
-    rootNode->MoveChatbotHere(std::move(chatBot.get())); // move the new chatbot instead
-
     
+
+    //ChatBot* chatBot(); // create chatbot
+    //_chatBot = chatBot; // kinda weird implementation (copying then copying again) but idk
+
+    // create instance of chatbot
+    if(_chatBot && _chatBot != nullptr){
+        //delete _chatBot;
+    }
+    _chatBot = new ChatBot("../images/chatbot.png");
+    
+    // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
+    _chatBot->SetChatLogicHandle(this);
+    _chatBot->SetRootNode(rootNode);
+    
+    //ChatBot chatBot (std::move(*_chatBot));
+
+    rootNode->MoveChatbotHere(std::move(_chatBot)); // move the new chatbot instead. getting ref of the ptr
     ////
     //// EOF STUDENT CODE T3 + T5 DONE
 }
@@ -262,7 +269,7 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
 
 void ChatLogic::SetChatbotHandle(ChatBot *chatbot)
 {
-    _chatBot = chatbot;
+    _chatBot = new ChatBot(std::move(*chatbot));
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)

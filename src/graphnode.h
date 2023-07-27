@@ -21,7 +21,10 @@ private:
 
     // data handles (not owned)
     std::vector<GraphEdge*> _parentEdges; // edges to preceding nodes 
+
+    // change it to smart pointer so that i have to do less work
     ChatBot *_chatBot;
+    //std::shared_ptr<ChatBot> _chatBot; // shared for copying
 
     ////
     //// EOF STUDENT CODE T4 DONE

@@ -18,7 +18,7 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::shared_ptr<GraphNode>> _nodes; // used shared ptr to allow copy semantics
+    std::vector<std::shared_ptr<GraphNode>> _nodes; // used shared ptr to allow copying
     //std::vector<GraphEdge *> _edges;
     // these will be owned by each elemnt in _nodes
     ////
@@ -26,7 +26,7 @@ private:
 
     // data handles (not owned)
     GraphNode *_currentNode;
-    ChatBot *_chatBot;
+    ChatBot* _chatBot;
     ChatBotPanelDialog *_panelDialog;
 
     // proprietary type definitions

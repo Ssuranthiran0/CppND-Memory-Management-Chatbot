@@ -9,13 +9,14 @@ GraphNode::GraphNode(int id)
 
 GraphNode::~GraphNode()
 {
-    //// STUDENT CODE T5
+    //// STUDENT CODE T5 DONE
     ////
 
-    delete _chatBot; 
+    // shared ptr
+    //delete _chatBot; 
 
     ////
-    //// EOF STUDENT CODE T5
+    //// EOF STUDENT CODE T5 DONE
 }
 
 void GraphNode::AddToken(std::string token)
@@ -34,21 +35,27 @@ void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
     _childEdges.push_back(nextEdge);
 }
 
-//// STUDENT CODE T5
+//// STUDENT CODE T5 DONE
 ////
 void GraphNode::MoveChatbotHere(ChatBot *chatbot)
 {
-    _chatBot = chatbot;
+    //std::shared_ptr<ChatBot> chatBot = std::make_shared<ChatBot>(std::move(*chatbot)); // looks kinda ugly but idk
+    ChatBot chatBot = ChatBot();
+    if(chatbot && chatbot != nullptr){
+        //chatBot = std::move(*chatbot);
+    }
+    //_chatBot = new ChatBot(chatBot);
+    _chatBot = std::move(chatbot);
     _chatBot->SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
-    newNode->MoveChatbotHere(_chatBot);
+    newNode->MoveChatbotHere(std::move(_chatBot)); 
     _chatBot = nullptr; // invalidate pointer at source
 }
 ////
-//// EOF STUDENT CODE T5
+//// EOF STUDENT CODE T5 DONE
 
 GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
