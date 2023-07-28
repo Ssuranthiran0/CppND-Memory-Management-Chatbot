@@ -18,9 +18,7 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::shared_ptr<GraphNode>> _nodes; // used shared ptr to allow copying
-    //std::vector<GraphEdge *> _edges;
-    // these will be owned by each elemnt in _nodes
+    std::vector<std::unique_ptr<GraphNode>> _nodes;
     ////
     //// EOF STUDENT CODE T3+T4 DONE
 
