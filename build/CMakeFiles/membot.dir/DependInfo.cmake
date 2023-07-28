@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/workspace/home/Chatbot/src/chatbot.cpp" "/workspace/home/Chatbot/build/CMakeFiles/membot.dir/src/chatbot.cpp.o"
-  "/workspace/home/Chatbot/src/chatgui.cpp" "/workspace/home/Chatbot/build/CMakeFiles/membot.dir/src/chatgui.cpp.o"
-  "/workspace/home/Chatbot/src/chatlogic.cpp" "/workspace/home/Chatbot/build/CMakeFiles/membot.dir/src/chatlogic.cpp.o"
-  "/workspace/home/Chatbot/src/graphedge.cpp" "/workspace/home/Chatbot/build/CMakeFiles/membot.dir/src/graphedge.cpp.o"
-  "/workspace/home/Chatbot/src/graphnode.cpp" "/workspace/home/Chatbot/build/CMakeFiles/membot.dir/src/graphnode.cpp.o"
+  "/workspace/home/CppND-Memory-Management-Chatbot/src/chatbot.cpp" "/workspace/home/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir/src/chatbot.cpp.o"
+  "/workspace/home/CppND-Memory-Management-Chatbot/src/chatgui.cpp" "/workspace/home/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir/src/chatgui.cpp.o"
+  "/workspace/home/CppND-Memory-Management-Chatbot/src/chatlogic.cpp" "/workspace/home/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir/src/chatlogic.cpp.o"
+  "/workspace/home/CppND-Memory-Management-Chatbot/src/graphedge.cpp" "/workspace/home/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir/src/graphedge.cpp.o"
+  "/workspace/home/CppND-Memory-Management-Chatbot/src/graphnode.cpp" "/workspace/home/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir/src/graphnode.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -75,8 +75,8 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
 ChatBot::ChatBot(ChatBot &&source){
 
     std::cout << "ChatBot Move Constructor" << std::endl;
-    // use std::move
-    _image = std::move(source._image);
+    _image = source._image;
+    source._image = NULL;
     _currentNode = std::move(source._currentNode);
     _rootNode = std::move(source._rootNode);
     _chatLogic = std::move(source._chatLogic);
@@ -89,7 +89,8 @@ ChatBot& ChatBot::operator=(ChatBot &&source){
     if(this == &source){
         return *this; // no need to move anything if source is the same instance
     }
-    _image = std::move(source._image);
+    _image = source._image;
+    source._image = NULL;
     _currentNode = std::move(source._currentNode);
     _rootNode = std::move(source._rootNode);
     _chatLogic = std::move(source._chatLogic);
