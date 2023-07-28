@@ -12,8 +12,6 @@ GraphNode::~GraphNode()
     //// STUDENT CODE T5 DONE
     ////
 
-    // shared ptr
-    //delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE T5 DONE
@@ -29,30 +27,22 @@ void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
     _parentEdges.push_back(edge);
 }
 
-void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
+void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> &&edge)
 {
-    std::shared_ptr<GraphEdge> nextEdge(edge);
-    _childEdges.push_back(nextEdge);
+    _childEdges.push_back(std::move(edge));
 }
 
 //// STUDENT CODE T5 DONE
 ////
-void GraphNode::MoveChatbotHere(ChatBot *chatbot)
+void GraphNode::MoveChatbotHere(ChatBot chatbot)
 {
-    //std::shared_ptr<ChatBot> chatBot = std::make_shared<ChatBot>(std::move(*chatbot)); // looks kinda ugly but idk
-    ChatBot chatBot = ChatBot();
-    if(chatbot && chatbot != nullptr){
-        //chatBot = std::move(*chatbot);
-    }
-    //_chatBot = new ChatBot(chatBot);
     _chatBot = std::move(chatbot);
-    _chatBot->SetCurrentNode(this);
+    _chatBot.SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
     newNode->MoveChatbotHere(std::move(_chatBot)); 
-    _chatBot = nullptr; // invalidate pointer at source
 }
 ////
 //// EOF STUDENT CODE T5 DONE

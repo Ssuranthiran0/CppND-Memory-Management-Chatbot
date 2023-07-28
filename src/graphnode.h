@@ -17,13 +17,13 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::shared_ptr<GraphEdge>> _childEdges;  // edges to subsequent nodes
+    std::vector<std::unique_ptr<GraphEdge>> _childEdges;  // edges to subsequent nodes
 
     // data handles (not owned)
     std::vector<GraphEdge*> _parentEdges; // edges to preceding nodes 
 
     // change it to smart pointer so that i have to do less work
-    ChatBot *_chatBot;
+    ChatBot _chatBot;
     //std::shared_ptr<ChatBot> _chatBot; // shared for copying
 
     ////
@@ -48,12 +48,12 @@ public:
     // proprietary functions
     void AddToken(std::string token); // add answers to list
     void AddEdgeToParentNode(GraphEdge *edge);
-    void AddEdgeToChildNode(GraphEdge *edge);
+    void AddEdgeToChildNode(std::unique_ptr<GraphEdge>&& edge);
 
     //// STUDENT CODE T5
     ////
 
-    void MoveChatbotHere(ChatBot *chatbot);
+    void MoveChatbotHere(ChatBot chatbot);
 
     ////
     //// EOF STUDENT CODE T5

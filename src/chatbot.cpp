@@ -143,7 +143,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
-
+    _chatLogic->SetChatbotHandle(this); // set the chabot handle to this active chatbot so that sending a message wont give a segmentation fault
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
