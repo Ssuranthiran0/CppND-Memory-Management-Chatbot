@@ -76,11 +76,14 @@ ChatBot::ChatBot(ChatBot &&source){
 
     std::cout << "ChatBot Move Constructor" << std::endl;
     _image = source._image;
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+
     source._image = NULL;
-    _currentNode = std::move(source._currentNode);
-    _rootNode = std::move(source._rootNode);
-    _chatLogic = std::move(source._chatLogic);
-    
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
 }
 
 // move op (same but operator)
@@ -90,10 +93,14 @@ ChatBot& ChatBot::operator=(ChatBot &&source){
         return *this; // no need to move anything if source is the same instance
     }
     _image = source._image;
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+
     source._image = NULL;
-    _currentNode = std::move(source._currentNode);
-    _rootNode = std::move(source._rootNode);
-    _chatLogic = std::move(source._chatLogic);
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
     return *this;
 }
 ////
